@@ -4,7 +4,7 @@
 #
 # It will download the latest Splunk version, generate a diag then proceed to the upgrade while writing the output to the console as well as in a log file.
 #
-# More info on github : https://github.com/d2si-spk/aws-ec2-user-data-splunk-quick-lab-install-no-popup
+# More info on github : https://github.com/d2si-spk/splunk-simple-upgrade-latest-version
 
 # Set the script to exit when a command fails
 set -o errexit
@@ -16,44 +16,53 @@ set -o pipefail
 set -o nounset
 
 # Set $timestamp variable for logging
-timestamp=$(date '+%a, %d %b %Y %H:%M:%S %z')
+timestamp=$(date '+%m-%d-%Y %H:%M:%S.%3N %z')
+
+# Set $log_file variable for logging
+log_file=$(dirname "$0")/$(basename "$0")
+log_file="${log_file%.*}.log"
 
 # Download the latest Splunk version
-wget --output-document splunk-latest-linux-x86_64.tgz 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=latest&product=splunk&filename=.tgz&wget=true' 2>&1 | tee "$(dirname "$0")"/"$(basename "$0")".log
+wget --output-document splunk-latest-linux-x86_64.tgz 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=latest&product=splunk&filename=.tgz&wget=true' 2>&1 | tee "${log_file}"
 
-echo "${timestamp} - 1/8 - Downloaded latest Splunk build"
+echo "${timestamp} - 1/9 - Downloaded latest Splunk build" | tee --append "${log_file}"
 
 # Generate a Splunk diag
-splunk diag --collect=etc 2>&1 | tee --append "$(dirname "$0")"/"$(basename "$0")".log
+splunk diag --collect=etc 2>&1 | tee --append "${log_file}" | tee --append "${log_file}"
 
-echo "${timestamp} - 2/8 - Generated a Splunk diag"
+echo "${timestamp} - 2/9 - Generated a Splunk diag" | tee --append "${log_file}"
 
 # Check Splunk version
-splunk version 2>&1 | tee --append "$(dirname "$0")"/"$(basename "$0")".log
+splunk version 2>&1 | tee --append "${log_file}"
 
-echo "${timestamp} - 3/8 - Checked Splunk version"
+echo "${timestamp} - 3/9 - Checked Splunk version" | tee --append "${log_file}"
 
 # Stop Splunk
-splunk stop 2>&1 | tee --append "$(dirname "$0")"/"$(basename "$0")".log
+splunk stop 2>&1 | tee --append "${log_file}"
 
-echo "${timestamp} - 4/8 - Stopped Splunk"
+echo "${timestamp} - 4/9 - Stopped Splunk" | tee --append "${log_file}"
 
 # Unpack Splunk tgz file to /opt
-tar --extract --gzip --file splunk-latest-linux-x86_64.tgz --directory /opt 2>&1 | tee --append "$(dirname "$0")"/"$(basename "$0")".log
+tar --extract --gzip --file splunk-latest-linux-x86_64.tgz --directory /opt 2>&1 | tee --append "${log_file}"
 
-echo "${timestamp} - 5/8 - Extracted Splunk to /opt"
+echo "${timestamp} - 5/9 - Extracted Splunk to /opt" | tee --append "${log_file}"
 
 # Start Splunk and accept upgrade
-splunk start --accept-license --answer-yes 2>&1 | tee --append "$(dirname "$0")"/"$(basename "$0")".log
+splunk start --accept-license --answer-yes 2>&1 | tee --append "${log_file}"
 
-echo "${timestamp} - 6/8 - Started Splunk and accepted upgrade"
+echo "${timestamp} - 6/9 - Started Splunk and accepted upgrade" | tee --append "${log_file}"
 
 # Check Splunk version
-splunk version 2>&1 | tee --append "$(dirname "$0")"/"$(basename "$0")".log
+splunk version 2>&1 | tee --append "${log_file}"
 
-echo "${timestamp} - 7/8 - Checked Splunk version"
+echo "${timestamp} - 7/9 - Checked Splunk version" | tee --append "${log_file}"
 
 # Check Splunk status
-splunk status 2>&1 | tee --append "$(dirname "$0")"/"$(basename "$0")".log
+splunk status 2>&1 | tee --append "${log_file}"
 
-echo "${timestamp} - 8/8 - Checked Splunk status"
+echo "${timestamp} - 8/9 - Checked Splunk status" | tee --append "${log_file}"
+
+# Delete Splunk tgz file
+rm --recursive --force splunk-latest-linux-x86_64.tgz
+
+echo "${timestamp} - 9/9 - Removed Splunk installation source" | tee --append "${log_file}"
