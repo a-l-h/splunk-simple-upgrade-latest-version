@@ -22,7 +22,7 @@ Copy the script to the target system, make it executable and run it.
 
 #### Logging
 
-The output is logged in splunk-simple-upgrade.log.
+The output is logged in splunk-simple-upgrade.sh.log.
 
 #### Splunk diag
 
