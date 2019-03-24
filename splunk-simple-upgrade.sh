@@ -28,7 +28,7 @@ wget --output-document splunk-latest-linux-x86_64.tgz 'https://www.splunk.com/bi
 echo "${timestamp} - 1/9 - Downloaded latest Splunk build" | tee --append "${log_file}"
 
 # Generate a Splunk diag
-splunk diag --collect=etc 2>&1 | tee --append "${log_file}" | tee --append "${log_file}"
+splunk diag --collect=etc 2>&1 | tee --append "${log_file}"
 
 echo "${timestamp} - 2/9 - Generated a Splunk diag" | tee --append "${log_file}"
 
