@@ -63,6 +63,6 @@ splunk status 2>&1 | tee --append "${log_file}"
 echo "${timestamp} - 8/9 - Checked Splunk status" | tee --append "${log_file}"
 
 # Delete Splunk tgz file
-rm --recursive --force splunk-latest-linux-x86_64.tgz
+rm --recursive --force splunk-latest-linux-x86_64.tgz 2>&1 | tee --append "${log_file}"
 
 echo "${timestamp} - 9/9 - Removed Splunk installation source" | tee --append "${log_file}"
