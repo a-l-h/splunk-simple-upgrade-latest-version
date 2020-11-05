@@ -1,4 +1,4 @@
-## Splunk upgrade script
+# ![](logo.svg) Splunk upgrade script
 
 This is a simple upgrade script for Splunk on Linux x64.
 
