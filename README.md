@@ -16,13 +16,13 @@ It is dedicated to Linux x64 tgz.
 
 Wget is used to download Splunk latest version.
 
-### Make sure path to ${SPLUNK_HOME}/bin has been added to your bash profile
+### Make sure path to `${SPLUNK_HOME}/bin` has been added to your bash profile
 
-As the script uses splunk commands, path to ${PSLUNK_HOME}/bin must be added.
+As the script uses splunk commands, path to `${PSLUNK_HOME}/bin` must be added.
 
 One can either use :
 
-```
+```shell
   {
     echo "export PS1='\[\033[1;32m\]\$(whoami)@\$(hostname): \[\033[0;37m\]\$(pwd)\$ \[\033[0m\]'"
     echo "export SPLUNK_HOME=\"/opt/splunk\""
