@@ -4,19 +4,19 @@ This is a simple upgrade script for Splunk on Linux x64.
 
 It will download the latest Splunk version, generate a diag then proceed to the upgrade while writing the output to the console as well as in a log file.
 
-### Prerequisites
+## Prerequisites
 
 To use this script to upgrade a Splunk instance, please consider the prerequisites below.
 
-#### Make sure the script match your environment/package
+### Make sure the script match your environment/package
 
 It is dedicated to Linux x64 tgz.
 
-#### Make sure wget is installed
+### Make sure wget is installed
 
 Wget is used to download Splunk latest version.
 
-#### Make sure path to ${SPLUNK_HOME}/bin has been added to your bash profile
+### Make sure path to ${SPLUNK_HOME}/bin has been added to your bash profile
 
 As the script uses splunk commands, path to ${PSLUNK_HOME}/bin must be added.
 
@@ -33,18 +33,18 @@ One can either use :
 
 or refer to: https://docs.splunk.com/Documentation/CoE/ssf/Handbook/UnixProfile#Add_Splunk_to_PATH
 
-#### Make sure Splunk website can be reached from your Splunk instance
+### Make sure Splunk website can be reached from your Splunk instance
 
 The package will be retrieved from splunk.com.
 
-#### Use the script
+### Use the script
 
 Copy the script to the target system, make it executable and run it.
 
-#### Logging
+### Logging
 
-The output is logged in splunk-simple-upgrade.sh.log.
+The output is logged in `splunk-simple-upgrade.sh.log`.
 
-#### Splunk diag
+### Splunk diag
 
-A light Splunk diag is generated in /opt/splunk directory.
+A light Splunk diag is generated in `/opt/splunk` directory.
